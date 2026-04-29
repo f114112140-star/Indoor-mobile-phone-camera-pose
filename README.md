@@ -5,7 +5,7 @@
 ```mermaid
 graph LR
     A[輸入照片] --> B[灰階化]
-    B --> C[Canny Edge]
+    B --> C[Canny]
     C --> D[Hough Line]
     D --> E[消失點偵測]
 
