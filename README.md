@@ -1,6 +1,17 @@
 # 室內手機相機姿態
 ## 專案流程
-輸入照片 -> 灰階化 -> canny -> Hough Line -> 找出視線消失點 -> 用相機內參數(fx,fy,cx,cy)回推相機旋轉矩陣 R ->轉成 yaw/roll/pitch
+```mermaid
+graph LR
+    A[輸入照片] -->|Preprocess| B[灰階化]
+    B --> C[Canny Edge]
+    C --> D[Hough Line]
+    D --> E[消失點偵測]
+
+    E -->|幾何關係| G[旋轉矩陣 R]
+    F[相機內參 fx fy cx cy] -->|Calibration| G
+
+    G --> H[yaw / roll / pitch]
+```
 ## breakdown
 ```mermaid
 graph TD
