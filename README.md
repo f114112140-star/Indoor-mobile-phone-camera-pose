@@ -26,12 +26,17 @@
 ## 系統分析
 ```mermaid
 graph TD
-  A[相機姿態] -->B[灰階化]
-  A --> C[canny]
-  A --> D[Hough Line]
-  A --> E[相機內參數]
-  D --> F[視線消失點]
-  
+  A[相機姿態] -->B[影像處理]
+  A --> C[幾何分析Numpy]
+  A --> D[姿態估計]
+  B --> E[灰階化]
+  B --> F[Canny]
+  C --> G[Hough Line]
+  C --> H[視線消失點]
+  C --> I[向量運算]
+  D --> J[旋轉矩陣R]
+  D --> K[三角函數(角度轉換)]
+
 ```
 ## 專案流程
 ```mermaid
