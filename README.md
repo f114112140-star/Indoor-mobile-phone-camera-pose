@@ -22,6 +22,17 @@
 5. 限制:
    
    硬體:RasberyPi
+
+## 系統分析
+```mermaid
+graph TD
+  A[相機姿態] -->B[灰階化]
+  A --> C[canny]
+  A --> D[Hough Line]
+  A --> E[相機內參數]
+  D --> F[視線消失點]
+  
+```
 ## 專案流程
 ```mermaid
 graph LR
@@ -34,11 +45,4 @@ graph LR
     F[相機內參 fx fy cx cy] --> G
 
     G --> H[yaw / roll / pitch]
-```
-## breakdown
-```mermaid
-graph TD
-  A[相機姿態] -->B[灰階化]
-  A --> C[canny]
-  A --> D[Hough Line]
 ```
