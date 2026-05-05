@@ -31,11 +31,11 @@ graph TD
   A --> D[姿態估計]
   B --> E[灰階化]
   B --> F[Canny]
-  C --> G[Hough Line]
-  C --> H[視線消失點]
+  B --> G[Hough Line]
+  C --> H[計算視線消失點]
   C --> I[向量運算]
   D --> J[旋轉矩陣R]
-  D --> K[三角函數 ( 角度轉換 ) ]
+  D --> K[三角函數 角度轉換 ]
 
 ```
 ## 專案流程
@@ -45,9 +45,9 @@ graph LR
     B --> C[Canny]
     C --> D[Hough Line]
     D --> E[消失點偵測]
-
-    E --> G[旋轉矩陣 R]
+    E --> I[向量運算]
+    I --> G[旋轉矩陣 R]
     F[相機內參 fx fy cx cy] --> G
-
-    G --> H[yaw / roll / pitch]
+    G --> J[角度轉換]
+    J --> H[yaw / roll / pitch]
 ```
