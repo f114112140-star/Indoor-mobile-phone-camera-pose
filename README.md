@@ -51,3 +51,15 @@ graph LR
     G --> J[角度轉換]
     J --> H[yaw / roll / pitch]
 ```
+## 執行結果
+### 室內
+<img width="640" height="482" alt="image" src="https://github.com/user-attachments/assets/1d6315a2-48b7-41d1-b0d0-8d7697f94cae" />
+<img width="642" height="479" alt="image" src="https://github.com/user-attachments/assets/ec87614b-6f21-42ef-98dc-5e5986aefec8" />
+
+### 室外
+<img width="642" height="484" alt="image" src="https://github.com/user-attachments/assets/ff6ebf21-6bdf-46f1-a8cf-ec4345bd8467" />
+
+## 驗證
+
+
+
