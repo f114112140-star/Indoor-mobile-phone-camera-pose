@@ -29,6 +29,7 @@ graph TD
   A[相機姿態] -->B[影像處理]
   A --> C[幾何分析Numpy]
   A --> D[姿態估計]
+  B --> L[高斯模糊]
   B --> E[灰階化]
   B --> F[Canny]
   B --> G[Hough Line]
@@ -42,15 +43,31 @@ graph TD
 ```mermaid
 graph LR
     A[輸入照片] --> B[灰階化]
-    B --> C[Canny]
-    C --> D[Hough Line]
-    D --> E[消失點偵測]
-    E --> I[向量運算]
-    I --> G[旋轉矩陣 R]
-    F[相機內參 fx fy cx cy] --> G
-    G --> J[角度轉換]
-    J --> H[yaw / roll / pitch]
+    B --> C[高斯模糊]
+    C --> D[Canny]
+    D --> E[Hough Line]
+    E --> F[消失點偵測]
+    F --> G[向量運算]
+    G --> I[旋轉矩陣 R]
+    J[相機內參 fx fy cx cy] --> I
+    I --> K[角度轉換]
+    K --> L[yaw / roll / pitch]
 ```
+## 方塊解釋
+| name | what | why | how |
+|-----|------|-----|-----|
+| 輸入照片 | 輸入資料可彩色或灰階 | 從影像中取得資訊 | 使用opencv讀取影像 |
+| 灰階化 | 將RGB轉成灰階影像 | canny與Hough Transform不需要顏色，只需要亮度變化 | opencv:<br>gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) |
+| 高斯模糊 | 利用 Gaussian Filter 平滑影像 | 去除高頻雜訊 | opencv:<br>blur=cv2.GaussianBlur(gray,(5,5),0)<br>Kernel(模糊範圍)越大雜訊越少細節損失越多 |
+| canny | 利用亮度變化找出影像的邊界 | 幫助Hough Line找線條 | opencv:<br>edges=cv2.Canny(gray,50,150) |
+| Hough Line | 霍夫直線轉換找出直線 | 視線消失點是由多條直線交會產生 | opencv:<br>cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,<br>threshold=60,投票門檻<br>minLineLength=50,最短線段<br>maxLineGap=15)最大間距 |
+| 消失點偵測 | 多條線段交會位置 | 估算yaw/pitch | 計算任兩條的焦點在取中位數 |
+| 向量運算 | 將消失點轉換成三維方向向量 | 消失點是2D座標旋轉矩陣要3D方向向量 | 利用fx,fy,cx,cy建立方向向量 |
+| 相機內參 | 相機成像模型參數 | 2D轉3D的幾何關係，若無內參無法建立正確方向向量 | 目前使用近似值fx=fy=0.8*width<br>cx=width/2<br>cy=height/2 |
+| 旋轉矩陣 | 相機在三維空間中的旋轉狀態 | Yaw、Pitch、Roll並不是直接由消失點取得，必須先建立旋轉矩陣 | 利用xyz方向建立R=[x,y,z] |
+| 角度轉換 | 將旋轉矩陣轉換為Yaw、Pitch、Roll | 矩陣不容易了解，角度比較清楚 | 透過 Euler Angle(歐拉角) 分解 |
+| Yaw、Pitch、Roll | 最終輸出 | 描述相機姿態 | 由旋轉矩陣轉換得到 |
+
 ## 執行結果
 ### 室內
 <img width="640" height="482" alt="image" src="https://github.com/user-attachments/assets/1d6315a2-48b7-41d1-b0d0-8d7697f94cae" />
