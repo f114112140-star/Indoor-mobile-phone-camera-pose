@@ -77,6 +77,6 @@ graph LR
 <img width="642" height="484" alt="image" src="https://github.com/user-attachments/assets/ff6ebf21-6bdf-46f1-a8cf-ec4345bd8467" />
 
 ## 驗證
-
+https://github.com/tszheichoi/awesome-sensor-logger
 
 
